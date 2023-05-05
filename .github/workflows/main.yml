@@ -21,6 +21,7 @@ jobs:
       # - name: Install dependencies
       #   if: steps.cache.outputs.cache-hit != 'true'
       #   run: npm ci --ignore-scripts
+      - run: npm ci
       - name: checkout source code
         uses: actions/checkout@v1
       - name: default deploy
