@@ -7,6 +7,8 @@ const morgan = require("morgan")
 const bodyParser = require("body-parser")
 const api = require("./api");
 const PORT = 3000;
+const swaggerFile = require("./swagger.json");
+const swaggerUi = require("swagger-ui-express");
 
 let app;
 
@@ -27,6 +29,7 @@ async function init() {
     );
     app.use(bodyParser.json());
     app.use("/smarthome", api)
+    app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
     const server = http.createServer(app);
 
     server.listen(PORT, () => {

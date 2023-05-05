@@ -1,0 +1,304 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Sm devices",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/"
+    }
+  ],
+  "paths": {
+    "/smarthome/devices/allDevices": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "The data has been obtained succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BodyDevicesGet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(Bad Request) There was an error while processing the data"
+          },
+          "401": {
+            "description": "(Unauthorized) There's no authorization for call the service"
+          },
+          "404": {
+            "description": "(NotFound) The data was not found"
+          },
+          "500": {
+            "description": "There was a server error"
+          }
+        }
+      }
+    },
+    "/smarthome/devices/addDevice": {
+      "post": {
+        "description": "",
+        "requestBody": {
+          "description": "Create a new device",
+          "content": {
+            "application/json": {
+              "schema": {},
+              "examples": {
+                "New device": {
+                  "value": {
+                    "product": {
+                      "isBlunde": false,
+                      "isCustomerVisible": true,
+                      "name": "device-name",
+                      "status": "active",
+                      "@baseType": "sm_data_instance",
+                      "@schemaLocation": "https://www.tmforum.org/resources",
+                      "@type": "sm_devices",
+                      "relatedParty": [
+                        {
+                          "role": "creator",
+                          "name": "x123456"
+                        }
+                      ],
+                      "productCharacteristic": [
+                        {
+                          "name": "brand",
+                          "valueType": "String",
+                          "value": "LG"
+                        },
+                        {
+                          "name": "mac_address",
+                          "valueType": "String",
+                          "value": "01:01:01:01:01:01"
+                        },
+                        {
+                          "name": "serial_number",
+                          "valueType": "String",
+                          "value": "ch-0001"
+                        },
+                        {
+                          "name": "last_ip_address",
+                          "valueType": "String",
+                          "value": "100.00.00.00"
+                        },
+                        {
+                          "name": "bluetooth_protocol",
+                          "valueType": "String",
+                          "value": "LMP"
+                        },  
+                        {
+                          "name": "category",
+                          "valueType": "String",
+                          "value": "fridge"
+                        },
+                        {
+                          "name": "model",
+                          "valueType": "String",
+                          "value": "door-in-door"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Device added succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BodyDevicesPost"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(Bad Request) There was an error while processing the data"
+          },
+          "401": {
+            "description": "(Unauthorized) There's no authorization for call the service"
+          },
+          "404": {
+            "description": "(NotFound) The data was not found"
+          },
+          "500": {
+            "description": "There was a server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BodyDevicesGet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Device id"
+          },
+          "isBundle": {
+            "type": "boolean",
+            "description": "Bundle device properties"
+          },
+          "isCustomerVisible": {
+            "type": "boolean",
+            "description": "Define if the customer can see the device"
+          },
+          "name": {
+            "type": "string",
+            "description": "Device name"
+          },
+          "status": {
+            "type": "string",
+            "description": "Device status"
+          },
+          "@baseType": {
+            "type": "string"
+          },
+          "@schemaLocation": {
+            "type": "string"
+          },
+          "@type": {
+            "type": "string",
+            "description": "Entity type"
+          },
+          "relatedParty": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BodyDevicesGet_relatedParty"
+            }
+          },
+          "productCharacteristic": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BodyDevicesGet_productCharacteristic"
+            }
+          }
+        }
+      },
+      "BodyDevicesPost": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "description": "New device Id"
+          },
+          "eventTime": {
+            "type": "string",
+            "description": "Date the device was added"
+          },
+          "eventType": {
+            "type": "string",
+            "description": "Operation type"
+          },
+          "event": {
+            "$ref": "#/components/schemas/BodyDevicesPost_event"
+          }
+        }
+      },
+      "BodyDevicesGet_relatedParty": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "role of the entity party"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the entity party"
+          }
+        }
+      },
+      "BodyDevicesGet_productCharacteristic": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name of the product characteristic"
+          },
+          "valueType": {
+            "type": "string",
+            "description": "type of the product characteristic"
+          },
+          "value": {
+            "type": "string",
+            "description": "value of the product characteristic"
+          }
+        }
+      },
+      "BodyDevicesPost_event_product": {
+        "type": "object",
+        "properties": {
+          "isBundle": {
+            "type": "boolean",
+            "description": "Bundle device properties"
+          },
+          "isCustomerVisible": {
+            "type": "boolean",
+            "description": "Define if the customer can see the device"
+          },
+          "name": {
+            "type": "string",
+            "description": "Device name"
+          },
+          "status": {
+            "type": "string",
+            "description": "Device status"
+          },
+          "@baseType": {
+            "type": "string"
+          },
+          "@schemaLocation": {
+            "type": "string"
+          },
+          "@type": {
+            "type": "string",
+            "description": "Entity type"
+          },
+          "relatedParty": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BodyDevicesGet_relatedParty"
+            }
+          },
+          "productCharacteristic": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BodyDevicesGet_productCharacteristic"
+            }
+          }
+        }
+      },
+      "BodyDevicesPost_event": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "$ref": "#/components/schemas/BodyDevicesPost_event_product"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "(Unauthorized) There's no authorization for call the service"
+      },
+      "NotFound": {
+        "description": "(NotFound) The data was not found"
+      },
+      "BadRequest": {
+        "description": "(Bad Request) There was an error while processing the data"
+      },
+      "ServerError": {
+        "description": "There was a server error"
+      }
+    }
+  }
+}

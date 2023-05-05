@@ -36,7 +36,7 @@ const showAll = async(req, res) => {
         }
         return res.status(SUCCESS_CODE).send(response);
     } catch(error){
-        return res.status(ERROR_CODE).send(error.message);
+        return res.status(ERROR_CODE).send({ error: i18n.t("general_error") });
     }
 }
 
@@ -46,7 +46,6 @@ const newDevice = async(req, res) => {
         const finalLang = !lang ? ENGLISH_CODE : lang;
         i18n.changeLanguage(!lang ? ENGLISH_CODE : lang);
         faker.setLocale(finalLang == FRENCH_CODE ? "fr_CA" : "en_CA");
-        //TODO Create message error in case body does not exist.
         if(req?.body?.product){
             const response = {
                 eventId: faker.datatype.uuid(),
@@ -58,9 +57,9 @@ const newDevice = async(req, res) => {
             }
             return res.status(SUCCESS_CODE).send(response);    
         }
-        return res.status(ERROR_CODE).send({ error: i18n.t("error_message_add_device") });
+        return res.status(SUCCESS_CODE).send({ message: i18n.t("error_message_add_device") });
     } catch(error) {
-        return res.status(ERROR_CODE).send(error.message);
+        return res.status(ERROR_CODE).send({ error: i18n.t("general_error") });
     }
 }
 
