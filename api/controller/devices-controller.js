@@ -7,7 +7,6 @@ const ERROR_CODE = 500;
 const LANGUAGE_HEADER = "accept-language";
 const ENGLISH_CODE = "en";
 const FRENCH_CODE = "fr";
-const SCHEMA_LOCATION = "https://www.tmforum.org/resources";
 
 const showAll = async(req, res) => {
     try {
@@ -18,13 +17,11 @@ const showAll = async(req, res) => {
         
         const response = {
             id: faker.datatype.uuid(),
-            href: `devices/`,
             isBundle: false,
             isCustomerVisible: true,
             name: faker.datatype.string,
             status: 'active',
             "@baseType": "sm_data_instance",
-            "@schemaLocation": SCHEMA_LOCATION,
             "@type": "sm_devices",
             "relatedParty": [
                 {
