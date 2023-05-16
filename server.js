@@ -9,6 +9,7 @@ const api = require("./api");
 const PORT = 3000;
 const swaggerFile = require("./swagger.json");
 const swaggerUi = require("swagger-ui-express");
+const VERSION = 'v0.1'
 
 let app;
 
@@ -28,7 +29,7 @@ async function init() {
         })
     );
     app.use(bodyParser.json());
-    app.use("/smarthome", api)
+    app.use(`/smarthome/${VERSION}`, api)
     app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
     const server = http.createServer(app);
 
